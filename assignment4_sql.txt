@@ -1,0 +1,253 @@
+import mysql.connector
+mydb=mysql.connector.connect(
+host="localhost",
+user="root", password="",
+database="emps"
+)
+def create():
+    id,name,department,salary=input("Enter id,name,department and salary").split()
+    mycursor=mydb.cursor()
+    sql="insert into employees(id,name,department,salary) values(%s,%s,%s,%s)"
+    val=(id,name,department,salary)
+    mycursor.execute(sql,val)
+    mydb.commit()
+    print(mycursor.rowcount,"record inserted.")
+    mycursor.execute("select * from employees")
+    myresult=mycursor.fetchall()
+    for x in myresult:
+        print(x)
+    
+
+def read():
+    mycursor=mydb.cursor()
+    mycursor.execute("select * from employees")
+    myresult=mycursor.fetchall()
+    for x in myresult:
+        print(x)
+    
+
+
+def delete():
+    id=input("input id")
+    mycursor=mydb.cursor()
+    val=(id,)
+    mycursor.execute("delete from employees where id=%s",val)
+    mydb.commit()
+    print(mycursor.rowcount,"record deleted.")
+    mycursor.execute("select * from employees")
+    myresult=mycursor.fetchall()
+    for x in myresult:
+        print(x)
+
+def update():
+    id,department=input("Enter id and department:").split()
+    mycursor=mydb.cursor()
+    val=(department,id)
+    mycursor.execute("update employees set department=%s where id=%s",val)
+    mydb.commit()
+    print(mycursor.rowcount,"record updated.")
+    mycursor.execute("select * from employees")
+    myresult=mycursor.fetchall()
+    for x in myresult:
+        print(x)
+def sort():
+    mycursor = mydb.cursor()
+    sql = "SELECT * FROM employees ORDER BY department"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for x in myresult:
+        print(x)
+        
+def sorta():
+    mycursor = mydb.cursor()
+    sql = "SELECT * FROM employees ORDER BY salary"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for x in myresult:
+        print(x)
+def filtera():
+    mycursor = mydb.cursor()
+    sql = "SELECT * FROM employees WHERE department like '%mca'"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for x in myresult:
+        print(x)
+        
+        
+def filterab():
+    mycursor = mydb.cursor()
+    sql = "SELECT * FROM employees WHERE salary like 2000"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for x in myresult:
+        print(x)
+   
+   
+    
+while True:
+    print("MENU DRIVEN OF FILE OPERATION")
+    print("1.CREATE")
+    print("2.READ")
+    print("3.delete")
+    print("4.update")
+    print("5.SORT DATA BY DEPARTMENT")
+    print("6.SORT DATA BY salary")
+    print("7.filter data by department")
+    print("8.filter data by salary")
+    
+    
+    choice = int(input("\nEnter the Choice: "))
+    if choice == 1:
+        create()
+    elif choice == 2:
+        read()
+    elif choice == 3:
+        delete()
+    elif choice == 4:
+        update()
+    elif choice == 5:
+        sort()
+    elif choice == 6:
+        sorta()
+    elif choice ==7:
+        filtera()
+    elif choice == 8:
+        filterab()
+    elif choice == 9:
+        break;
+    else:
+        print("invalid")
+
+OUTPUT:
+
+MENU DRIVEN OF FILE OPERATION
+1.CREATE
+2.READ
+3.delete
+4.update
+5.SORT DATA BY DEPARTMENT
+6.SORT DATA BY salary
+7.filter data by department
+8.filter data by salary
+
+Enter the Choice: 1
+Enter id,name,department and salary5 nikhil bca 3500
+1 record inserted.
+(1, 'vishal', 'mca', 4000)
+(2, 'manu', 'bca', 3000)
+(3, 'manoj', 'bca', 2000)
+(4, 'helen', 'mca', 1000)
+(5, 'nikhil', 'bca', 3500)
+
+
+MENU DRIVEN OF FILE OPERATION
+1.CREATE
+2.READ
+3.delete
+4.update
+5.SORT DATA BY DEPARTMENT
+6.SORT DATA BY salary
+7.filter data by department
+8.filter data by salary
+
+Enter the Choice: 2
+(1, 'vishal', 'mca', 4000)
+(2, 'manu', 'bca', 3000)
+(3, 'manoj', 'bca', 2000)
+(4, 'helen', 'mca', 1000)
+(5, 'nikhil', 'bca', 3500)
+
+MENU DRIVEN OF FILE OPERATION
+1.CREATE
+2.READ
+3.delete
+4.update
+5.SORT DATA BY DEPARTMENT
+6.SORT DATA BY salary
+7.filter data by department
+8.filter data by salary
+
+Enter the Choice: 3
+input id5
+1 record deleted.
+(1, 'vishal', 'mca', 4000)
+(2, 'manu', 'bca', 3000)
+(3, 'manoj', 'bca', 2000)
+(4, 'helen', 'mca', 1000)
+
+
+MENU DRIVEN OF FILE OPERATION
+1.CREATE
+2.READ
+3.delete
+4.update
+5.SORT DATA BY DEPARTMENT
+6.SORT DATA BY salary
+7.filter data by department
+8.filter data by salary
+
+Enter the Choice: 4
+Enter id and department:4 bca
+1 record updated.
+(1, 'vishal', 'mca', 4000)
+(2, 'manu', 'bca', 3000)
+(3, 'manoj', 'bca', 2000)
+(4, 'helen', 'bca', 1000)
+
+MENU DRIVEN OF FILE OPERATION
+1.CREATE
+2.READ
+3.delete
+4.update
+5.SORT DATA BY DEPARTMENT
+6.SORT DATA BY salary
+7.filter data by department
+8.filter data by salary
+
+Enter the Choice: 5
+(2, 'manu', 'bca', 3000)
+(3, 'manoj', 'bca', 2000)
+(4, 'helen', 'bca', 1000)
+(1, 'vishal', 'mca', 4000)
+
+MENU DRIVEN OF FILE OPERATION
+1.CREATE
+2.READ
+3.delete
+4.update
+5.SORT DATA BY DEPARTMENT
+6.SORT DATA BY salary
+7.filter data by department
+8.filter data by salary
+
+Enter the Choice: 6
+(4, 'helen', 'bca', 1000)
+(3, 'manoj', 'bca', 2000)
+(2, 'manu', 'bca', 3000)
+(1, 'vishal', 'mca', 4000)
+
+MENU DRIVEN OF FILE OPERATION
+1.CREATE
+2.READ
+3.delete
+4.update
+5.SORT DATA BY DEPARTMENT
+6.SORT DATA BY salary
+7.filter data by department
+8.filter data by salary
+
+Enter the Choice: 7
+(1, 'vishal', 'mca', 4000)
+
+MENU DRIVEN OF FILE OPERATION
+1.CREATE
+2.READ
+3.delete
+4.update
+5.SORT DATA BY DEPARTMENT
+6.SORT DATA BY salary
+7.filter data by department
+8.filter data by salary
+
+Enter the Choice: 8
+(3, 'manoj', 'bca', 2000)
